@@ -20,6 +20,7 @@ class NewNotification implements ShouldBroadcast
     public $post_id;
     public $date;
     public $time;
+    public $ownerPost;
 
     /**
      * Create a new event instance.
@@ -31,6 +32,7 @@ class NewNotification implements ShouldBroadcast
         $this->user_id = $notifyData['user_id'];
         $this->comment = $notifyData['comment'];
         $this->post_id = $notifyData['post_id'];
+        $this->ownerPost = $notifyData['ownerPost'];
         $this->date = date("Y M d", strtotime(Carbon::now()));
         $this->time = date("h:i A", strtotime(Carbon::now()));
     }

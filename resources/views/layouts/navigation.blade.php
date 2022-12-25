@@ -35,18 +35,22 @@
                                         d="M23.0002 0C12.5068 0 4.00017 8.50659 4.00017 19V32.5335C4.00017 32.8383 3.9145 33.1371 3.75292 33.3956L0.912672 37.94C0.0801118 39.2721 1.0378 41 2.60867 41H43.3917C44.9625 41 45.9202 39.2721 45.0877 37.94L42.2474 33.3956C42.0858 33.1371 42.0002 32.8383 42.0002 32.5335V19C42.0002 8.50659 33.4936 0 23.0002 0ZM23.0002 48C20.2388 48 18.0002 45.7614 18.0002 43H28.0002C28.0002 45.7614 25.7616 48 23.0002 48Z">
                                     </path>
                                 </svg>
-                                <span class="absolute text-white -top-1 right-1" data-count>0</span>
+                                <span class="absolute text-white -top-1 right-1" ownerPost="{{Auth::user()->id}}" data-count>{{count(Auth::user()->notifications)}}</span>
                             </div>
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            Notifications
-                        </x-dropdown-link>
+                        <div class="notificationsContents text-white p-3">
+                            @foreach (Auth::user()->comments as $postsComments)
+                                @foreach ($postsComments->comments as $comment)
+                                    <p class="my-3">{{$comment->comment}}</p>
+                                    <hr>
+                                @endforeach
+                            @endforeach
+                        </div>
                     </x-slot>
                 </x-dropdown>
-
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

@@ -28,53 +28,35 @@
                                     </div>
                                 @endif
                                 <h1 class="text-amber-800 text-xl mb-4"> {{$post -> title}} @if(Auth::id() == $post -> user -> id) -   المالك @endif</h1>
-                                {{$post -> content}}
+                                <p class="mb-2">{{$post -> content}}</p>
+                                <form class="flex flex-col justify-center items-center gap-2 w-full sm:w-1/2" method="POST" action="{{route('saveComment')}}" enctype="multipart/form-data">
+                                    @csrf
 
-                                @if(Auth::id() != $post -> user -> id)
-                                    <form method="POST" action="{{route('saveComment')}}" enctype="multipart/form-data">
-                                        @csrf
-
-                                        <input type="hidden" name="post_id" value="{{$post -> id}}">
-                                        <div class="">
-                                            <input type="text"
-                                                class="form-input text-gray-900 px-4 py-2 rounded"
-                                                name="post_content">
-                                            @error('name_ar')
-                                            <small class="">{{$message}}</small>
-                                            @enderror
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary">أضافه ردك</button>
-                                    </form>
-                                @endif
+                                    <input type="hidden" name="post_id" value="{{$post -> id}}">
+                                    <div class="w-full">
+                                        <input type="text"
+                                            class="form-input text-gray-900 px-4 py-2 rounded w-full"
+                                            name="post_content">
+                                        @error('name_ar')
+                                        <small class="">{{$message}}</small>
+                                        @enderror
+                                    </div>
+                                    <button type="submit" class="rounded bg-green-600 px-5 py-2">أضافه ردك</button>
+                                </form>
                             </div>
-                            <div class="notifications">
+                            <div class="notifications" id="{{$post-> id}}">
                                 <h5>التعليقات</h5>
                                 @if (count($post->comments) > 0)
                                     @foreach ($post->comments as $comment)
-                                        @if (Auth::id() == $post->user -> id)
-                                            <p>
-                                                {{$comment->comment}}
-                                            </p>
-                                        @endif
+                                        <p class="py-3">{{$comment->comment}}</p>
                                     @endforeach
-                            </div>
                                 @endif
-                            <hr>
+                            </div>
+                            <hr class="mb-6">
                         @endforeach
                     @endif
                 </div>
             </div>
-
-
-            {{-- @foreach ($AllPosts as $post)
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="text-amber-800 text-xl">{{ $post->title }}</h2>
-                        <p>{{ $post->content }}</p>
-                    </div>
-                </div>
-            @endforeach --}}
         </div>
     </div>
 </x-app-layout>
